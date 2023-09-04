@@ -1,42 +1,52 @@
 import React, { useState } from 'react';
 
 function Calculator() {
-  const [result, setResult] = useState('');
-  const [error, setError] = useState('');
-
-  const clickHandle = (e) => {
-    if (error) {
-      setError('');
-      setResult('');
-    }
-
-    setResult(result.concat(e.target.value));
-  };
-
-  const clearScreen = () => {
-    setResult('');
-    setError('');
-  };
-
-  const calculate = () => {
-    try {
-      // Use a regular expression to prevent unsafe calculations
-      if (/[^0-9+\-*/().]/.test(result)) {
-        throw new Error('Invalid input');
-      }
-
-      const calculatedResult = eval(result).toString();
-
-      // Check for division by zero
-      if (calculatedResult === 'Infinity' || calculatedResult === '-Infinity') {
-        throw new Error('Division by zero');
-      }
-
-      setResult(calculatedResult);
-    } catch (err) {
-      setError('Error: ' + err.message);
-    }
-  };
+  
+   // State to store the current result and any errors
+   const [result, setResult] = useState('');
+   const [error, setError] = useState('');
+ 
+   // Function to handle button clicks
+   const clickHandle = (e) => {
+     // If there's an error, clear it and the result
+     if (error) {
+       setError('');
+       setResult('');
+     }
+ 
+     // Concatenate the clicked button's value to the current result
+     setResult(result.concat(e.target.value));
+   };
+ 
+   // Function to clear the screen (result and error)
+   const clearScreen = () => {
+     setResult('');
+     setError('');
+   };
+ 
+   // Function to calculate the result
+   const calculate = () => {
+     try {
+       // Use a regular expression to prevent unsafe calculations
+       if (/[^0-9+\-*/().]/.test(result)) {
+         throw new Error('Invalid input');
+       }
+ 
+       // Calculate the result and convert it to a string
+       const calculatedResult = eval(result).toString();
+ 
+       // Check for division by zero
+       if (calculatedResult === 'Infinity' || calculatedResult === '-Infinity') {
+         throw new Error('Division by zero');
+       }
+ 
+       // Set the calculated result
+       setResult(calculatedResult);
+     } catch (err) {
+       // If there's an error during calculation, set the error state
+       setError('Error: ' + err.message);
+     }
+   };
 
   return (
     <div className="bg-gray-900 text-white w-screen h-screen flex justify-center items-center">
@@ -51,7 +61,7 @@ function Calculator() {
           />
         </div>
 
-        <div className="brand flex justify-center mb-3 shadow-md text-gray-500 bg-gray-200 bg-opacity-90">
+        <div className="brand flex justify-center mb-3 shadow-md text-sky-500 bg-gray-200 bg-opacity-90">
           <h1 className="text-gray-900 text-xs font-bold">CalC By Mr.100rabh</h1>
         </div>
 
